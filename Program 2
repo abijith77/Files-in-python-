@@ -1,0 +1,21 @@
+b) Write a program to append the contents of one file at the end of another
+
+Program:
+def append_file_contents(source_file_path, destination_file_path):
+    try:
+        with open(source_file_path, 'r') as source_file:
+            contents = source_file.read()
+
+        with open(destination_file_path, 'a') as destination_file:
+            destination_file.write(contents)
+        
+        print(f"Contents of '{source_file_path}' have been appended to '{destination_file_path}'.")
+    except FileNotFoundError as e:
+        print(f"File not found: {e.filename}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage:
+source_file_path = 'source.txt'  # Replace with the path to the source file
+destination_file_path = 'destination.txt'  # Replace with the path to the destination file
+append_file_contents(source_file_path, destination_file_path)
