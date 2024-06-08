@@ -1,0 +1,29 @@
+e) Write a program that merges lines alternately from two files and writes the results to new file. If one file has less number of lines than the other, the remaining lines from the larger file should be simply copied into the target file.
+
+Program:
+def merge_files_alternately(file1_path, file2_path, output_file_path):
+    try:
+        with open(file1_path, 'r') as file1, open(file2_path, 'r') as file2:
+            lines1 = file1.readlines()
+            lines2 = file2.readlines()
+
+        max_length = max(len(lines1), len(lines2))
+        
+        with open(output_file_path, 'w') as output_file:
+            for i in range(max_length):
+                if i < len(lines1):
+                    output_file.write(lines1[i])
+                if i < len(lines2):
+                    output_file.write(lines2[i])
+
+        print(f"Files '{file1_path}' and '{file2_path}' have been merged alternately into '{output_file_path}'.")
+    except FileNotFoundError as e:
+        print(f"File not found: {e.filename}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage:
+file1_path = 'students1.txt'  # Replace with the path to the first file
+file2_path = 'students2.txt'  # Replace with the path to the second file
+output_file_path = 'merged_students.txt'  # Replace with the path to the output file
+merge_files_alternately(file1_path, file2_path, output_file_path)
