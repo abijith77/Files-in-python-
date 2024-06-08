@@ -1,0 +1,30 @@
+(c) Suppose a file contains student's records with each record containing name and age of a student. Write a program to read these records and display them in sorted order by name.
+
+Program:
+def read_and_sort_students(file_path):
+    try:
+        students = []
+        
+        # Read the file and parse the student records
+        with open(file_path, 'r') as file:
+            for line in file:
+                name, age = line.strip().split(',')
+                students.append((name.strip(), int(age.strip())))
+        
+        # Sort the students by name
+        students.sort(key=lambda student: student[0])
+        
+        # Display the sorted records
+        for name, age in students:
+            print(f"Name: {name}, Age: {age}")
+    
+    except FileNotFoundError:
+        print(f"The file at path {file_path} was not found.")
+    except ValueError:
+        print("Error in parsing the file. Ensure it is in 'name,age' format.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage:
+file_path = 'students.txt'  # Replace with the path to your file
+read_and_sort_students(file_path)
