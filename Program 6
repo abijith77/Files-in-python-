@@ -1,0 +1,40 @@
+ (f) Suppose an Employee object contains following details: employee code, employee name, date of joining, salary Write a program to serialize and deserialize this data
+
+Program:
+import pickle
+from datetime import datetime
+
+class Employee:
+    def __init__(self, employee_code, employee_name, date_of_joining, salary):
+        self.employee_code = employee_code
+        self.employee_name = employee_name
+        self.date_of_joining = date_of_joining
+        self.salary = salary
+
+    def __repr__(self):
+        return f"Employee({self.employee_code}, {self.employee_name}, {self.date_of_joining}, {self.salary})"
+
+def serialize_employee(employee, filename):
+    with open(filename, 'wb') as file:
+        pickle.dump(employee, file)
+    print(f"Employee data serialized to {filename}")
+
+def deserialize_employee(filename):
+    with open(filename, 'rb') as file:
+        employee = pickle.load(file)
+    print(f"Employee data deserialized from {filename}")
+    return employee
+
+if __name__ == "__main__":
+    # Create an employee object
+    employee = Employee("E001", "John Doe", datetime(2020, 1, 15), 50000)
+
+    # File to store serialized data
+    filename = 'employee_data.pkl'
+
+    # Serialize the employee object
+    serialize_employee(employee, filename)
+
+    # Deserialize the employee object
+    deserialized_employee = deserialize_employee(filename)
+    print(deserialized_employee)
