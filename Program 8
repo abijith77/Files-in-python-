@@ -1,0 +1,39 @@
+(h) Given a list of names of students in a class, write a program to store the names in a file on disk. Make a provision to display the n th name in the list, where n is read from the keyboard.
+
+Program:
+def store_names(names, file_path):
+    try:
+        with open(file_path, 'w') as file:
+            for name in names:
+                file.write(name + '\n')
+        print(f"Names have been stored in {file_path}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+def display_nth_name(file_path, n):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            if 1 <= n <= len(lines):
+                print(f"The {n}th name in the list is: {lines[n-1].strip()}")
+            else:
+                print(f"Invalid input. Please enter a number between 1 and {len(lines)}.")
+    except FileNotFoundError:
+        print(f"The file {file_path} does not exist.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage
+if __name__ == "__main__":
+    student_names = ['Alice', 'Bob', 'Charlie', 'David', 'Eve']  # Replace with your list of student names
+    file_path = 'students.txt'  # Replace with your desired file path
+    
+    # Store the names in the file
+    store_names(student_names, file_path)
+    
+    # Read the nth name from the file
+    try:
+        n = int(input("Enter the position (n) of the name you want to display: "))
+        display_nth_name(file_path, n)
+    except ValueError:
+        print("Invalid input. Please enter a valid integer.")
