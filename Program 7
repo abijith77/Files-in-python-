@@ -1,0 +1,35 @@
+(g) A hospital keeps a file of blood donors in which each record has the
+format: Name: 20 Columns Address: 40 Columns Age: 2 Columns Blood Type: 1 Column (Type 1, 2, 3 or 4) Write a program to read the file and print a list of all blood donors whose age is below 25 and whose blood type is 2.
+
+Program:
+def read_donors(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            donors = []
+            for line in file:
+                name = line[0:20].strip()
+                address = line[20:60].strip()
+                age = int(line[60:62].strip())
+                blood_type = line[62:63].strip()
+                donors.append((name, address, age, blood_type))
+        return donors
+    except FileNotFoundError:
+        print(f"The file {file_path} does not exist.")
+        return []
+    except Exception as e:
+        print(f"An error occurred: {e}")
+        return []
+
+def filter_donors(donors):
+    filtered_donors = [donor for donor in donors if donor[2] < 25 and donor[3] == '2']
+    return filtered_donors
+
+def print_donors(donors):
+    for donor in donors:
+        print(f"Name: {donor[0]}, Address: {donor[1]}, Age: {donor[2]}, Blood Type: {donor[3]}")
+
+# Example usage
+file_path = 'donors.txt'  # Replace with your file path
+donors = read_donors(file_path)
+filtered_donors = filter_donors(donors)
+print_donors(filtered_donors)
