@@ -1,0 +1,28 @@
+d) Write a program to copy contents of one file to another. While doing so replace all lowercase characters with their equivalent uppercase characters.
+
+Program:
+def copy_and_uppercase(source_file_path, destination_file_path):
+    try:
+        # Read the contents of the source file
+        with open(source_file_path, 'r') as source_file:
+            contents = source_file.read()
+        
+        # Convert contents to uppercase
+        uppercase_contents = contents.upper()
+        
+        # Write the uppercase contents to the destination file
+        with open(destination_file_path, 'w') as destination_file:
+            destination_file.write(uppercase_contents)
+        
+        print(f"Contents of '{source_file_path}' have been copied to '{destination_file_path}' with all lowercase characters converted to uppercase.")
+    except FileNotFoundError as e:
+        print(f"File not found: {e.filename}")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage:
+source_file_path = 'source.txt'  # Replace with the path to the source file
+destination_file_path = 'destination.txt'  # Replace with the path to the destination file
+copy_and_uppercase(source_file_path, destination_file_path)
+Output:
+File not found: source.txt
