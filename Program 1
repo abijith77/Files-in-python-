@@ -1,0 +1,18 @@
+(a) Write a program to read a file and display its contents along with line numbers
+before each line.
+
+Program:
+def display_file_with_line_numbers(file_path):
+    try:
+        with open(file_path, 'r') as file:
+            lines = file.readlines()
+            for line_number, line in enumerate(lines, start=1):
+                print(f"{line_number}: {line}", end='')
+    except FileNotFoundError:
+        print(f"The file at path {file_path} was not found.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage:
+file_path = 'example.txt'  # Replace with the path to your file
+display_file_with_line_numbers(file_path)
