@@ -1,0 +1,74 @@
+Assume that a Master file contains two fields, roll number and name of the student. At the end of the year, a set of students join the class and another set leaves. A Transaction file contains the roll numbers and an appropriate code to add or delete a student. 
+Write a program to create another file that contains the updated list of names and roll numbers. 
+Assume that the Master file and the Transaction file are arranged in ascending order by roll numbers.
+The updated file should also be in ascending order by roll numbers.
+
+
+Program:
+def read_master_file(file_path):
+    students = {}
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                parts = line.strip().split(maxsplit=1)
+                roll_number = int(parts[0])
+                name = parts[1] if len(parts) > 1 else ""
+                students[roll_number] = name
+    except FileNotFoundError:
+        print(f"The file {file_path} does not exist.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return students
+
+def read_transaction_file(file_path):
+    transactions = []
+    try:
+        with open(file_path, 'r') as file:
+            for line in file:
+                parts = line.strip().split()
+                roll_number = int(parts[0])
+                code = parts[1]
+                transactions.append((roll_number, code))
+    except FileNotFoundError:
+        print(f"The file {file_path} does not exist.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+    return transactions
+
+def update_students(students, transactions):
+    for roll_number, code in transactions:
+        if code == 'A':
+            # Add the student (assume new students have roll_number and placeholder name)
+            if roll_number not in students:
+                students[roll_number] = "New Student"  # Placeholder for new students
+        elif code == 'D':
+            # Delete the student if exists
+            if roll_number in students:
+                del students[roll_number]
+    return students
+
+def write_updated_file(students, file_path):
+    try:
+        with open(file_path, 'w') as file:
+            for roll_number in sorted(students):
+                file.write(f"{roll_number} {students[roll_number]}\n")
+        print(f"Updated student list has been written to {file_path}.")
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+# Example usage
+master_file_path = 'master.txt'  # Replace with your master file path
+transaction_file_path = 'transactions.txt'  # Replace with your transaction file path
+updated_file_path = 'updated_master.txt'  # Replace with your updated file path
+
+# Read master file
+students = read_master_file(master_file_path)
+
+# Read transaction file
+transactions = read_transaction_file(transaction_file_path)
+
+# Update student list based on transactions
+updated_students = update_students(students, transactions)
+
+# Write the updated list to a new file
+write_updated_file(updated_students, updated_file_path)
